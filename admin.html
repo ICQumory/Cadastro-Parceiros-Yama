@@ -352,6 +352,21 @@
     };
   }
 
+  function mudarStatus(clienteId, novoStatus){
+    return function(){
+      rpc('admin_update_status', { p_senha: senhaAtual, p_cliente_id: clienteId, p_novo_status: novoStatus }).then(function(res){
+        if(res.ok){
+          carregarCadastros();
+        } else {
+          alert('Não foi possível atualizar o status: ' + (res.data && res.data.message ? res.data.message : 'erro desconhecido'));
+        }
+      }).catch(function(err){
+        alert('Erro de conexão ao atualizar status.');
+        console.error(err);
+      });
+    };
+  }
+
   function deleteCliente(clienteId, card){
     return function(){
       var confirmado = window.confirm('Apagar este cadastro (cliente + contatos) permanentemente? Esta ação não pode ser desfeita.');
@@ -416,12 +431,35 @@
       var toggleBtn = document.createElement('button');
       toggleBtn.className = 'btn-toggle';
       toggleBtn.textContent = 'Ver contatos';
+      actions.appendChild(toggleBtn);
+
+      if(item.status !== 'aprovado'){
+        var aprovarBtn = document.createElement('button');
+        aprovarBtn.className = 'btn-toggle';
+        aprovarBtn.textContent = 'Aprovar';
+        aprovarBtn.onclick = mudarStatus(item.cliente_id, 'aprovado');
+        actions.appendChild(aprovarBtn);
+      }
+
+      if(item.status !== 'rejeitado'){
+        var rejeitarBtn = document.createElement('button');
+        rejeitarBtn.className = 'btn-toggle';
+        rejeitarBtn.textContent = 'Rejeitar';
+        rejeitarBtn.onclick = mudarStatus(item.cliente_id, 'rejeitado');
+        actions.appendChild(rejeitarBtn);
+      }
+
+      if(item.status !== 'pendente'){
+        var reabrirBtn = document.createElement('button');
+        reabrirBtn.className = 'btn-toggle';
+        reabrirBtn.textContent = 'Reabrir (pendente)';
+        reabrirBtn.onclick = mudarStatus(item.cliente_id, 'pendente');
+        actions.appendChild(reabrirBtn);
+      }
 
       var deleteBtn = document.createElement('button');
       deleteBtn.className = 'btn-delete';
       deleteBtn.textContent = 'Apagar';
-
-      actions.appendChild(toggleBtn);
       actions.appendChild(deleteBtn);
 
       head.appendChild(infoWrap);

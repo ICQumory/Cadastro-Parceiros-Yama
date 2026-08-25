@@ -209,6 +209,36 @@
   .lgpd label{font-size:12.5px;color:var(--muted);line-height:1.5;}
   .lgpd label strong{color:var(--text);}
 
+  .privacy-notice{
+    margin-bottom:12px;
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    background:#fff;
+  }
+  .privacy-notice summary{
+    cursor:pointer;
+    padding:10px 14px;
+    font-size:12.5px;
+    font-weight:700;
+    color:var(--primary);
+    list-style:none;
+  }
+  .privacy-notice summary::-webkit-details-marker{display:none;}
+  .privacy-notice summary::before{
+    content:"▸ ";
+  }
+  .privacy-notice[open] summary::before{
+    content:"▾ ";
+  }
+  .privacy-notice-body{
+    padding:0 16px 16px;
+    font-size:12px;
+    color:var(--muted);
+    line-height:1.6;
+  }
+  .privacy-notice-body p{margin:0 0 10px;}
+  .privacy-notice-body strong{color:var(--text);}
+
   .submit-row{
     display:flex;
     flex-direction:column;
@@ -325,9 +355,21 @@
       <div id="contact-counter"><strong>0</strong> de 10 contatos adicionados</div>
     </div>
 
+    <details class="privacy-notice">
+      <summary>Aviso de privacidade — como usamos estes dados</summary>
+      <div class="privacy-notice-body">
+        <p><strong>Finalidade.</strong> Os dados informados neste formulário (parceiro, cliente e contatos) são usados exclusivamente para fins comerciais: cadastro e relacionamento da Yamá com o cliente indicado.</p>
+        <p><strong>Responsabilidade pela coleta.</strong> Quem preenche este formulário declara ter autorização para fornecer os dados de contato de terceiros aqui informados (nome, cargo, telefone, email). A Yamá não verifica essa autorização no momento do envio.</p>
+        <p><strong>Análise antes do uso oficial.</strong> Todo cadastro entra como "pendente" e passa por revisão manual da equipe de Inteligência Comercial da Yamá antes de ser incorporado à base oficial de clientes.</p>
+        <p><strong>Retenção.</strong> Os dados ficam armazenados enquanto o relacionamento comercial com o cliente estiver ativo, ou até que a exclusão seja solicitada.</p>
+        <p><strong>Direitos do titular.</strong> Qualquer pessoa cujos dados de contato tenham sido informados aqui pode solicitar acesso, correção ou exclusão desses dados entrando em contato com a área de Inteligência Comercial da Yamá.</p>
+        <p style="margin-bottom:0;"><em>Este aviso é um resumo informativo e não substitui a política de privacidade formal da Yamá Cosméticos.</em></p>
+      </div>
+    </details>
+
     <div class="lgpd">
       <input type="checkbox" id="lgpd-check">
-      <label for="lgpd-check"><strong>Confirmo</strong> que tenho autorização para fornecer os dados de contato informados acima, e estou ciente de que essas informações serão usadas exclusivamente para fins comerciais e de relacionamento da Yamá com este cliente.</label>
+      <label for="lgpd-check"><strong>Confirmo</strong> que tenho autorização para fornecer os dados de contato informados acima, e estou ciente de que essas informações serão usadas exclusivamente para fins comerciais e de relacionamento da Yamá com este cliente, conforme o aviso de privacidade acima.</label>
     </div>
 
     <div class="submit-row">
