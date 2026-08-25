@@ -35,10 +35,9 @@
     justify-content:space-between;
   }
   .logo{
-    font-weight:800;
-    font-size:18px;
-    letter-spacing:0.5px;
-    color:var(--primary);
+    height:36px;
+    width:auto;
+    display:block;
   }
   .header-tag{
     font-size:11px;
@@ -241,7 +240,7 @@
 <body>
 
 <header>
-  <div class="logo">YAMÁ</div>
+  <img class="logo" src="assets/logo-yama.png" alt="Yamá">
   <div class="header-right">
     <div class="header-tag">Painel de Administração</div>
     <a class="btn-sair" href="index.html" id="btn-sair">Sair</a>
@@ -254,7 +253,7 @@
     <div class="login-card">
       <h1>Acesso restrito</h1>
       <p>Cadastro de Parceiros / Clientes — uso interno</p>
-      <input type="password" id="senha-input" placeholder="Senha">
+      <input type="password" id="senha-input" placeholder="Senha" autocomplete="new-password" autocorrect="off" autocapitalize="off" spellcheck="false" data-lpignore="true" data-1p-ignore>
       <button class="btn-primary" id="btn-login">Entrar</button>
       <div class="login-error" id="login-error"></div>
     </div>
@@ -561,6 +560,14 @@
     document.getElementById('btn-refresh').onclick = carregarCadastros;
     document.getElementById('btn-export-csv').onclick = exportarCSV;
     document.getElementById('btn-export-json').onclick = exportarJSON;
+
+    // Segunda camada contra autopreenchimento do navegador: alguns
+    // navegadores preenchem o campo DEPOIS do evento de carregamento,
+    // ignorando o autocomplete="new-password" do HTML. Limpamos de
+    // novo em seguida, garantindo que o acesso exige digitar a senha.
+    var senhaInput = document.getElementById('senha-input');
+    senhaInput.value = '';
+    setTimeout(function(){ senhaInput.value = ''; }, 300);
   }
 
   document.addEventListener('DOMContentLoaded', init);
