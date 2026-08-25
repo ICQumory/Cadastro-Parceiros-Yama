@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Administração — Cadastro de Parceiros Yamá</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --primary:#C8102E;
+    --primary-dark:#9E0D23;
+    --bg:#F4F4F6;
+    --card:#FFFFFF;
+    --text:#1A1A1A;
+    --muted:#6B6B6B;
+    --border:#E2E2E5;
+    --radius:6px;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:'Inter','Segoe UI',sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    font-size:14px;
+    line-height:1.5;
+  }
+  header{
+    background:#FFFFFF;
+    border-bottom:2px solid var(--primary);
+    padding:16px 24px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .logo{
+    font-weight:800;
+    font-size:18px;
+    letter-spacing:0.5px;
+    color:var(--primary);
+  }
+  .header-tag{
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:1.2px;
+    color:var(--muted);
+    font-weight:600;
+  }
+  main{
+    max-width:1000px;
+    margin:0 auto;
+    padding:32px 24px 60px;
+  }
+
+  /* --- tela de login --- */
+  #login-screen{
+    max-width:380px;
+    margin:80px auto;
+  }
+  .login-card{
+    background:var(--card);
+    border-top:3px solid var(--primary);
+    border-radius:var(--radius);
+    box-shadow:0 1px 3px rgba(0,0,0,0.08);
+    padding:32px;
+    text-align:center;
+  }
+  .login-card h1{
+    font-size:18px;
+    margin:0 0 6px;
+  }
+  .login-card p{
+    color:var(--muted);
+    font-size:12.5px;
+    margin:0 0 20px;
+  }
+  .login-card input{
+    width:100%;
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:10px 12px;
+    font-size:14px;
+    margin-bottom:12px;
+  }
+  .login-card input:focus{
+    outline:none;
+    border-color:var(--primary);
+    box-shadow:0 0 0 3px rgba(200,16,46,0.12);
+  }
+  .btn-primary{
+    background:var(--primary);
+    color:#fff;
+    border:none;
+    font-weight:700;
+    font-size:14px;
+    padding:10px 20px;
+    border-radius:var(--radius);
+    cursor:pointer;
+    width:100%;
+  }
+  .btn-primary:hover{background:var(--primary-dark);}
+  .btn-primary:disabled{background:var(--border);cursor:not-allowed;}
+  .login-error{
+    color:var(--primary);
+    font-size:12.5px;
+    font-weight:600;
+    margin-top:10px;
+    display:none;
+  }
+
+  /* --- painel --- */
+  #panel-screen{display:none;}
+  .toolbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+    flex-wrap:wrap;
+    gap:10px;
+  }
+  .toolbar-title{
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:1.2px;
+    font-weight:800;
+    color:var(--primary);
+  }
+  .toolbar-actions button{
+    background:#fff;
+    border:1px solid var(--border);
+    color:var(--text);
+    font-size:12.5px;
+    font-weight:600;
+    padding:8px 14px;
+    border-radius:var(--radius);
+    cursor:pointer;
+    margin-left:8px;
+  }
+  .toolbar-actions button:hover{background:var(--bg);}
+
+  .cliente-card{
+    background:var(--card);
+    border-top:3px solid var(--primary);
+    border-radius:var(--radius);
+    box-shadow:0 1px 3px rgba(0,0,0,0.06);
+    padding:20px 24px;
+    margin-bottom:16px;
+  }
+  .cliente-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    flex-wrap:wrap;
+    gap:12px;
+  }
+  .cliente-nome{font-size:16px;font-weight:700;}
+  .cliente-meta{font-size:12px;color:var(--muted);margin-top:2px;}
+  .status-badge{
+    display:inline-block;
+    font-size:11px;
+    font-weight:700;
+    text-transform:uppercase;
+    letter-spacing:0.5px;
+    padding:2px 8px;
+    border-radius:4px;
+  }
+  .status-pendente{background:#FCEAED;color:var(--primary-dark);}
+  .status-aprovado{background:#E6F4E6;color:#2E7D32;}
+  .status-rejeitado{background:#F0F0F0;color:var(--muted);}
+
+  .cliente-actions{display:flex;gap:8px;}
+  .btn-toggle, .btn-delete{
+    border:1px solid var(--border);
+    background:#fff;
+    font-size:12px;
+    font-weight:600;
+    padding:6px 12px;
+    border-radius:var(--radius);
+    cursor:pointer;
+  }
+  .btn-toggle:hover{background:var(--bg);}
+  .btn-delete{color:var(--primary);border-color:var(--primary);}
+  .btn-delete:hover{background:#FCEAED;}
+
+  .contatos-table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:14px;
+    display:none;
+  }
+  .contatos-table th{
+    background:var(--primary);
+    color:#fff;
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:0.4px;
+    text-align:left;
+    padding:8px 10px;
+  }
+  .contatos-table td{
+    font-size:13px;
+    padding:8px 10px;
+    border-bottom:1px solid var(--border);
+  }
+  .contatos-table tr:nth-child(even) td{background:#F4F4F6;}
+
+  #empty-state, #loading-state{
+    text-align:center;
+    color:var(--muted);
+    padding:60px 20px;
+    font-size:13px;
+  }
+
+  footer{
+    background:#1A1A1A;
+    color:#B5B5B8;
+    text-align:center;
+    padding:18px;
+    font-size:11.5px;
+    letter-spacing:0.3px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">YAMÁ</div>
+  <div class="header-tag">Painel de Administração</div>
+</header>
+
+<main>
+
+  <div id="login-screen">
+    <div class="login-card">
+      <h1>Acesso restrito</h1>
+      <p>Cadastro de Parceiros / Clientes — uso interno</p>
+      <input type="password" id="senha-input" placeholder="Senha">
+      <button class="btn-primary" id="btn-login">Entrar</button>
+      <div class="login-error" id="login-error"></div>
+    </div>
+  </div>
+
+  <div id="panel-screen">
+    <div class="toolbar">
+      <div class="toolbar-title">Cadastros recebidos</div>
+      <div class="toolbar-actions">
+        <button id="btn-refresh">Atualizar</button>
+        <button id="btn-export-csv">Exportar CSV</button>
+        <button id="btn-export-json">Exportar JSON</button>
+      </div>
+    </div>
+
+    <div id="loading-state">Carregando...</div>
+    <div id="empty-state" style="display:none;">Nenhum cadastro encontrado.</div>
+    <div id="clientes-container"></div>
+  </div>
+
+</main>
+
+<footer>YAMÁ COSMÉTICOS — PAINEL DE ADMINISTRAÇÃO · USO INTERNO E RESTRITO</footer>
+
+<script>
+(function(){
+  var SUPABASE_URL = "https://zsscctppxyjrvzttggns.supabase.co";
+  var ANON_KEY = "sb_publishable_iRP_GXXNvQRWwE2rK6CUSg_WhG2LMfF";
+
+  var senhaAtual = null;
+  var cadastrosAtuais = [];
+
+  function rpc(nome, params){
+    return fetch(SUPABASE_URL + '/rest/v1/rpc/' + nome, {
+      method: 'POST',
+      headers: {
+        'apikey': ANON_KEY,
+        'Authorization': 'Bearer ' + ANON_KEY,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(params)
+    }).then(function(res){
+      return res.text().then(function(text){
+        var data = null;
+        try { data = text ? JSON.parse(text) : null; } catch(e){ /* corpo vazio ou não-JSON */ }
+        return { ok: res.ok, status: res.status, data: data, raw: text };
+      });
+    });
+  }
+
+  function formatarData(iso){
+    if(!iso) return '';
+    var d = new Date(iso);
+    return d.toLocaleDateString('pt-BR') + ' ' + d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+  }
+
+  function statusClasse(status){
+    if(status === 'aprovado') return 'status-aprovado';
+    if(status === 'rejeitado') return 'status-rejeitado';
+    return 'status-pendente';
+  }
+
+  function buildContatosTable(contatos){
+    var table = document.createElement('table');
+    table.className = 'contatos-table';
+
+    var thead = document.createElement('thead');
+    var headRow = document.createElement('tr');
+    ['#', 'Nome', 'Cargo', 'Telefone', 'Email'].forEach(function(h){
+      var th = document.createElement('th');
+      th.textContent = h;
+      headRow.appendChild(th);
+    });
+    thead.appendChild(headRow);
+    table.appendChild(thead);
+
+    var tbody = document.createElement('tbody');
+    contatos.forEach(function(c){
+      var tr = document.createElement('tr');
+      [c.ordem, c.nome, c.cargo || '—', c.telefone, c.email || '—'].forEach(function(v){
+        var td = document.createElement('td');
+        td.textContent = v;
+        tr.appendChild(td);
+      });
+      tbody.appendChild(tr);
+    });
+    table.appendChild(tbody);
+    return table;
+  }
+
+  function toggleContatos(table, btn){
+    return function(){
+      var visible = table.style.display === 'table';
+      table.style.display = visible ? 'none' : 'table';
+      btn.textContent = visible ? 'Ver contatos' : 'Ocultar contatos';
+    };
+  }
+
+  function deleteCliente(clienteId, card){
+    return function(){
+      var confirmado = window.confirm('Apagar este cadastro (cliente + contatos) permanentemente? Esta ação não pode ser desfeita.');
+      if(!confirmado) return;
+
+      rpc('admin_delete_cadastro', { p_senha: senhaAtual, p_cliente_id: clienteId }).then(function(res){
+        if(res.ok){
+          card.remove();
+          cadastrosAtuais = cadastrosAtuais.filter(function(c){ return c.cliente_id !== clienteId; });
+          if(cadastrosAtuais.length === 0){
+            document.getElementById('empty-state').style.display = 'block';
+          }
+        } else {
+          alert('Não foi possível apagar: ' + (res.data && res.data.message ? res.data.message : 'erro desconhecido'));
+        }
+      }).catch(function(err){
+        alert('Erro de conexão ao tentar apagar.');
+        console.error(err);
+      });
+    };
+  }
+
+  function renderCadastros(cadastros){
+    var container = document.getElementById('clientes-container');
+    container.innerHTML = '';
+
+    document.getElementById('loading-state').style.display = 'none';
+    document.getElementById('empty-state').style.display = cadastros.length === 0 ? 'block' : 'none';
+
+    cadastros.forEach(function(item){
+      var card = document.createElement('div');
+      card.className = 'cliente-card';
+
+      var head = document.createElement('div');
+      head.className = 'cliente-head';
+
+      var infoWrap = document.createElement('div');
+      var nomeEl = document.createElement('div');
+      nomeEl.className = 'cliente-nome';
+      nomeEl.textContent = item.cliente_nome;
+
+      var statusEl = document.createElement('span');
+      statusEl.className = 'status-badge ' + statusClasse(item.status);
+      statusEl.textContent = item.status;
+      nomeEl.appendChild(document.createTextNode(' '));
+      nomeEl.appendChild(statusEl);
+
+      var metaEl = document.createElement('div');
+      metaEl.className = 'cliente-meta';
+      metaEl.textContent =
+        'CNPJ: ' + item.cliente_codigo +
+        '  ·  Parceiro: ' + item.parceiro_nome + (item.parceiro_codigo ? ' (' + item.parceiro_codigo + ')' : ' (sem código)') +
+        '  ·  Enviado em ' + formatarData(item.submitted_at) +
+        '  ·  ' + item.contatos.length + ' contato(s)';
+
+      infoWrap.appendChild(nomeEl);
+      infoWrap.appendChild(metaEl);
+
+      var actions = document.createElement('div');
+      actions.className = 'cliente-actions';
+
+      var toggleBtn = document.createElement('button');
+      toggleBtn.className = 'btn-toggle';
+      toggleBtn.textContent = 'Ver contatos';
+
+      var deleteBtn = document.createElement('button');
+      deleteBtn.className = 'btn-delete';
+      deleteBtn.textContent = 'Apagar';
+
+      actions.appendChild(toggleBtn);
+      actions.appendChild(deleteBtn);
+
+      head.appendChild(infoWrap);
+      head.appendChild(actions);
+
+      var contatosTable = buildContatosTable(item.contatos);
+
+      toggleBtn.onclick = toggleContatos(contatosTable, toggleBtn);
+      deleteBtn.onclick = deleteCliente(item.cliente_id, card);
+
+      card.appendChild(head);
+      card.appendChild(contatosTable);
+      container.appendChild(card);
+    });
+  }
+
+  function carregarCadastros(){
+    document.getElementById('loading-state').style.display = 'block';
+    document.getElementById('empty-state').style.display = 'none';
+    document.getElementById('clientes-container').innerHTML = '';
+
+    rpc('admin_list_cadastros', { p_senha: senhaAtual }).then(function(res){
+      if(res.ok){
+        cadastrosAtuais = res.data || [];
+        renderCadastros(cadastrosAtuais);
+      } else {
+        document.getElementById('loading-state').style.display = 'none';
+        alert('Não foi possível carregar os cadastros. Sessão pode ter expirado — faça login novamente.');
+        mostrarLogin();
+      }
+    }).catch(function(err){
+      document.getElementById('loading-state').style.display = 'none';
+      alert('Erro de conexão ao carregar os cadastros.');
+      console.error(err);
+    });
+  }
+
+  function mostrarLogin(){
+    senhaAtual = null;
+    document.getElementById('login-screen').style.display = 'block';
+    document.getElementById('panel-screen').style.display = 'none';
+  }
+
+  function mostrarPainel(){
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('panel-screen').style.display = 'block';
+    carregarCadastros();
+  }
+
+  function tentarLogin(){
+    var senhaInput = document.getElementById('senha-input');
+    var erroEl = document.getElementById('login-error');
+    var btn = document.getElementById('btn-login');
+    var senha = senhaInput.value;
+
+    if(!senha){ return; }
+
+    erroEl.style.display = 'none';
+    btn.disabled = true;
+    btn.textContent = 'Verificando...';
+
+    rpc('admin_verify', { p_senha: senha }).then(function(res){
+      btn.disabled = false;
+      btn.textContent = 'Entrar';
+
+      if(res.ok && res.data === true){
+        senhaAtual = senha;
+        mostrarPainel();
+      } else {
+        erroEl.textContent = 'Senha incorreta.';
+        erroEl.style.display = 'block';
+        senhaInput.value = '';
+        senhaInput.focus();
+      }
+    }).catch(function(err){
+      btn.disabled = false;
+      btn.textContent = 'Entrar';
+      erroEl.textContent = 'Erro de conexão. Tente novamente.';
+      erroEl.style.display = 'block';
+      console.error(err);
+    });
+  }
+
+  function paraCSV(cadastros){
+    var linhas = [['Cliente', 'CNPJ', 'Status', 'Enviado em', 'Parceiro', 'Codigo Parceiro', 'Contato Nome', 'Contato Cargo', 'Contato Telefone', 'Contato Email']];
+    cadastros.forEach(function(item){
+      if(item.contatos.length === 0){
+        linhas.push([item.cliente_nome, item.cliente_codigo, item.status, formatarData(item.submitted_at), item.parceiro_nome, item.parceiro_codigo || '', '', '', '', '']);
+      } else {
+        item.contatos.forEach(function(c){
+          linhas.push([item.cliente_nome, item.cliente_codigo, item.status, formatarData(item.submitted_at), item.parceiro_nome, item.parceiro_codigo || '', c.nome, c.cargo || '', c.telefone, c.email || '']);
+        });
+      }
+    });
+    return linhas.map(function(linha){
+      return linha.map(function(campo){
+        var texto = String(campo == null ? '' : campo);
+        if(texto.indexOf(',') !== -1 || texto.indexOf('"') !== -1 || texto.indexOf('\n') !== -1){
+          texto = '"' + texto.replace(/"/g, '""') + '"';
+        }
+        return texto;
+      }).join(',');
+    }).join('\r\n');
+  }
+
+  function baixarArquivo(conteudo, nomeArquivo, tipo){
+    var blob = new Blob([conteudo], { type: tipo });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = nomeArquivo;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  function exportarCSV(){
+    if(cadastrosAtuais.length === 0){ alert('Nada para exportar.'); return; }
+    var csv = '\uFEFF' + paraCSV(cadastrosAtuais); // BOM para acentuação abrir certo no Excel
+    baixarArquivo(csv, 'cadastros-yama-' + new Date().toISOString().slice(0,10) + '.csv', 'text/csv;charset=utf-8;');
+  }
+
+  function exportarJSON(){
+    if(cadastrosAtuais.length === 0){ alert('Nada para exportar.'); return; }
+    baixarArquivo(JSON.stringify(cadastrosAtuais, null, 2), 'cadastros-yama-' + new Date().toISOString().slice(0,10) + '.json', 'application/json;charset=utf-8;');
+  }
+
+  function init(){
+    document.getElementById('btn-login').onclick = tentarLogin;
+    document.getElementById('senha-input').addEventListener('keydown', function(e){
+      if(e.key === 'Enter'){ tentarLogin(); }
+    });
+    document.getElementById('btn-refresh').onclick = carregarCadastros;
+    document.getElementById('btn-export-csv').onclick = exportarCSV;
+    document.getElementById('btn-export-json').onclick = exportarJSON;
+  }
+
+  document.addEventListener('DOMContentLoaded', init);
+})();
+</script>
+
+</body>
+</html>
