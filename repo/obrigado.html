@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cadastro enviado — Yamá</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --primary:#C8102E;
+    --primary-dark:#9E0D23;
+    --bg:#F4F4F6;
+    --text:#1A1A1A;
+    --muted:#6B6B6B;
+    --border:#E0E0E0;
+    --radius:6px;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:'Inter','Segoe UI',sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+  }
+  header{
+    background:#FFFFFF;
+    border-bottom:2px solid var(--primary);
+    padding:16px 24px;
+  }
+  .logo{
+    font-weight:800;
+    font-size:18px;
+    letter-spacing:0.5px;
+    color:var(--primary);
+  }
+  main{
+    flex:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+  }
+  .card{
+    background:#FFFFFF;
+    border-top:3px solid var(--primary);
+    border-radius:var(--radius);
+    box-shadow:0 1px 3px rgba(0,0,0,0.08);
+    padding:48px 40px;
+    max-width:480px;
+    text-align:center;
+  }
+  .icon{
+    width:56px;
+    height:56px;
+    border-radius:50%;
+    background:#FCEAED;
+    color:var(--primary);
+    font-size:28px;
+    font-weight:800;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:0 auto 20px;
+  }
+  h1{
+    font-size:22px;
+    font-weight:800;
+    margin:0 0 12px;
+    color:var(--text);
+  }
+  p{
+    font-size:14px;
+    color:var(--muted);
+    line-height:1.6;
+    margin:0 0 8px;
+  }
+  footer{
+    background:#1A1A1A;
+    color:#B5B5B8;
+    text-align:center;
+    padding:18px;
+    font-size:11.5px;
+    letter-spacing:0.3px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">YAMÁ</div>
+</header>
+
+<main>
+  <div class="card">
+    <div class="icon">✓</div>
+    <h1>Cadastro enviado com sucesso</h1>
+    <p>Recebemos os dados do cliente e dos contatos informados.</p>
+    <p>Seu cadastro passará por uma análise interna antes de ser incorporado à base oficial de clientes.</p>
+  </div>
+</main>
+
+<footer>YAMÁ COSMÉTICOS — CADASTRO DE PARCEIROS · USO INTERNO E DE REDE COMERCIAL</footer>
+
+</body>
+</html>

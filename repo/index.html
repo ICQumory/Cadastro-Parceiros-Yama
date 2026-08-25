@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cadastro de Clientes e Contatos — Parceiros Yamá</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --primary:#C8102E;
+    --primary-dark:#9E0D23;
+    --bg:#F4F4F6;
+    --card:#FFFFFF;
+    --text:#1A1A1A;
+    --muted:#6B6B6B;
+    --border:#E2E2E5;
+    --radius:6px;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    font-family:'Inter','Segoe UI',sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    font-size:14px;
+    line-height:1.5;
+  }
+  header{
+    background:#FFFFFF;
+    border-bottom:2px solid var(--primary);
+    padding:16px 24px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .logo{
+    font-weight:800;
+    font-size:18px;
+    letter-spacing:0.5px;
+    color:var(--primary);
+  }
+  .header-tag{
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:1.2px;
+    color:var(--muted);
+    font-weight:600;
+  }
+  .hero{
+    background:linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color:#fff;
+    padding:36px 24px 44px;
+  }
+  .hero-inner{
+    max-width:760px;
+    margin:0 auto;
+  }
+  .hero-eyebrow{
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:1.5px;
+    font-weight:700;
+    opacity:0.85;
+    margin-bottom:8px;
+  }
+  .hero h1{
+    margin:0 0 8px;
+    font-size:26px;
+    font-weight:800;
+    letter-spacing:-0.3px;
+  }
+  .hero p{
+    margin:0;
+    font-size:14px;
+    opacity:0.92;
+    max-width:560px;
+  }
+  main{
+    max-width:760px;
+    margin:-24px auto 60px;
+    padding:0 24px;
+  }
+  .card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:24px;
+    margin-bottom:20px;
+    box-shadow:0 1px 2px rgba(0,0,0,0.04);
+  }
+  .card-label{
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:1.2px;
+    font-weight:800;
+    color:var(--primary);
+    margin-bottom:4px;
+  }
+  .card-sub{
+    font-size:12px;
+    color:var(--muted);
+    margin-bottom:18px;
+  }
+  .grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+  }
+  .field{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+  }
+  .field label{
+    font-size:12px;
+    font-weight:600;
+    color:var(--text);
+  }
+  .field label .req{color:var(--primary);}
+  .field input{
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:9px 10px;
+    font-size:14px;
+    font-family:inherit;
+    color:var(--text);
+    background:#fff;
+    width:100%;
+  }
+  .field input:focus{
+    outline:none;
+    border-color:var(--primary);
+    box-shadow:0 0 0 3px rgba(200,16,46,0.12);
+  }
+  .field input::placeholder{color:#B5B5B8;}
+
+  .contact-block{
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:16px;
+    margin-bottom:12px;
+    position:relative;
+    background:#FAFAFB;
+  }
+  .contact-block-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:12px;
+  }
+  .contact-number{
+    font-size:11px;
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    color:var(--muted);
+  }
+  .remove-btn{
+    border:none;
+    background:none;
+    color:var(--muted);
+    font-size:12px;
+    font-weight:600;
+    cursor:pointer;
+    padding:4px 8px;
+    border-radius:var(--radius);
+  }
+  .remove-btn:hover{
+    color:var(--primary);
+    background:#FBEAEC;
+  }
+
+  .add-btn{
+    border:1px dashed var(--primary);
+    background:#fff;
+    color:var(--primary);
+    font-weight:700;
+    font-size:13px;
+    padding:10px 16px;
+    border-radius:var(--radius);
+    cursor:pointer;
+    width:100%;
+  }
+  .add-btn:hover{background:#FBEAEC;}
+  .add-btn:disabled{
+    border-color:var(--border);
+    color:var(--muted);
+    cursor:not-allowed;
+    background:#F4F4F6;
+  }
+  #contact-counter{
+    font-size:12px;
+    color:var(--muted);
+    text-align:right;
+    margin-top:6px;
+  }
+  #contact-counter strong{color:var(--text);}
+
+  .lgpd{
+    display:flex;
+    gap:10px;
+    align-items:flex-start;
+    background:#F4F4F6;
+    border-radius:var(--radius);
+    padding:14px 16px;
+    margin-bottom:20px;
+  }
+  .lgpd input{margin-top:3px;}
+  .lgpd label{font-size:12.5px;color:var(--muted);line-height:1.5;}
+  .lgpd label strong{color:var(--text);}
+
+  .submit-row{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-end;
+    gap:8px;
+  }
+  .submit-btn{
+    background:var(--primary);
+    color:#fff;
+    border:none;
+    font-weight:700;
+    font-size:14px;
+    padding:12px 28px;
+    border-radius:var(--radius);
+    cursor:pointer;
+  }
+  .submit-btn:hover{background:var(--primary-dark);}
+  .submit-note{
+    font-size:11.5px;
+    color:var(--muted);
+    text-align:right;
+    max-width:320px;
+  }
+
+  footer{
+    background:var(--text);
+    color:#B5B5B8;
+    text-align:center;
+    padding:18px;
+    font-size:11.5px;
+    letter-spacing:0.3px;
+  }
+
+  .status-mock{
+    position:fixed;
+    top:14px;
+    right:14px;
+    background:#1A1A1A;
+    color:#fff;
+    font-size:11px;
+    padding:6px 10px;
+    border-radius:var(--radius);
+    opacity:0.75;
+    font-weight:600;
+    letter-spacing:0.5px;
+  }
+
+  .error-banner{
+    display:none;
+    background:#FCEAED;
+    border:1px solid var(--primary);
+    color:var(--primary-dark);
+    border-radius:var(--radius);
+    padding:12px 16px;
+    font-size:13px;
+    font-weight:600;
+    margin-bottom:20px;
+  }
+
+  @media (max-width:560px){
+    .grid{grid-template-columns:1fr;}
+    .hero h1{font-size:22px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">YAMÁ</div>
+  <div class="header-tag">Rede de Parceiros</div>
+</header>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Cadastro de Parceiro</div>
+    <h1>Cadastro de Cliente e Contatos</h1>
+    <p>Preencha seus dados como parceiro Yamá e cadastre o cliente atendido, com até 10 contatos por cliente. As informações serão analisadas antes de entrarem na base oficial.</p>
+  </div>
+</div>
+
+<main>
+
+  <div class="error-banner" id="error-banner"></div>
+
+  <form id="cadastro-form">
+
+    <div class="card">
+      <div class="card-label">Dados do Parceiro</div>
+      <div class="card-sub">Identificação de quem está realizando o cadastro.</div>
+      <div class="grid" id="parceiro-fields"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Dados do Cliente</div>
+      <div class="card-sub">Cliente sendo cadastrado ou atualizado.</div>
+      <div class="grid" id="cliente-fields"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Contatos do Cliente</div>
+      <div class="card-sub">Cadastre de 1 a 10 pessoas de contato deste cliente.</div>
+
+      <div id="contacts-container"></div>
+
+      <button type="button" class="add-btn" id="add-btn">+ Adicionar contato</button>
+      <div id="contact-counter"><strong>0</strong> de 10 contatos adicionados</div>
+    </div>
+
+    <div class="lgpd">
+      <input type="checkbox" id="lgpd-check">
+      <label for="lgpd-check"><strong>Confirmo</strong> que tenho autorização para fornecer os dados de contato informados acima, e estou ciente de que essas informações serão usadas exclusivamente para fins comerciais e de relacionamento da Yamá com este cliente.</label>
+    </div>
+
+    <div class="submit-row">
+      <button type="button" class="submit-btn" id="submit-btn">Enviar cadastro</button>
+      <div class="submit-note">Seu cadastro passará por uma análise interna antes de ser incorporado à base oficial de clientes.</div>
+    </div>
+
+  </form>
+
+</main>
+
+<footer>YAMÁ COSMÉTICOS — CADASTRO DE PARCEIROS · USO INTERNO E DE REDE COMERCIAL</footer>
+
+<script>
+(function(){
+  var SUPABASE_URL = "https://zsscctppxyjrvzttggns.supabase.co";
+  var ANON_KEY = "sb_publishable_iRP_GXXNvQRWwE2rK6CUSg_WhG2LMfF";
+
+  var MAX = 10;
+  var contactCount = 0;
+  var container;
+  var addBtn;
+  var counterEl;
+  var errorBanner;
+
+  var parceiroNomeInput, parceiroCodigoInput;
+  var clienteNomeInput, clienteCodigoInput;
+
+  // Padrão MIA dev standard (registrado na MOC do Scorecard RCA):
+  // nunca concatenar string com onclick inline em HTML — sempre
+  // createElement + .onclick via closure.
+
+  // Retorna {wrap, input} — wrap é o <div class="field"> pronto pra
+  // inserir no DOM, input é a referência direta pra ler o valor depois.
+  function createField(labelText, required, type, placeholder, value){
+    var wrap = document.createElement('div');
+    wrap.className = 'field';
+
+    var label = document.createElement('label');
+    label.textContent = labelText + ' ';
+    if(required){
+      var req = document.createElement('span');
+      req.className = 'req';
+      req.textContent = '*';
+      label.appendChild(req);
+    }
+
+    var input = document.createElement('input');
+    input.type = type || 'text';
+    if(placeholder) input.placeholder = placeholder;
+    if(value) input.value = value;
+
+    wrap.appendChild(label);
+    wrap.appendChild(input);
+    return { wrap: wrap, input: input };
+  }
+
+  function showError(message){
+    errorBanner.textContent = message;
+    errorBanner.style.display = 'block';
+    errorBanner.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  function clearError(){
+    errorBanner.style.display = 'none';
+    errorBanner.textContent = '';
+  }
+
+  function renumberContacts(){
+    var blocks = container.querySelectorAll('.contact-block');
+    blocks.forEach(function(block, i){
+      var numEl = block.querySelector('.contact-number');
+      numEl.textContent = 'Contato ' + String(i + 1).padStart(2, '0');
+    });
+  }
+
+  function updateCounter(){
+    counterEl.querySelector('strong').textContent = String(contactCount);
+    addBtn.disabled = contactCount >= MAX;
+  }
+
+  function removeContact(block){
+    return function(){
+      container.removeChild(block);
+      contactCount--;
+      renumberContacts();
+      updateCounter();
+    };
+  }
+
+  function buildContactBlock(opts){
+    opts = opts || {};
+    var block = document.createElement('div');
+    block.className = 'contact-block';
+    block.dataset.role = 'contact-block';
+
+    var head = document.createElement('div');
+    head.className = 'contact-block-head';
+
+    var num = document.createElement('div');
+    num.className = 'contact-number';
+    num.textContent = 'Contato ' + String(contactCount + 1).padStart(2, '0');
+    head.appendChild(num);
+
+    if(opts.removable){
+      var removeBtn = document.createElement('button');
+      removeBtn.type = 'button';
+      removeBtn.className = 'remove-btn';
+      removeBtn.textContent = 'Remover';
+      removeBtn.onclick = removeContact(block);
+      head.appendChild(removeBtn);
+    }
+
+    var fNome = createField('Nome', true, 'text', 'Nome completo', opts.nome);
+    var fCargo = createField('Cargo', false, 'text', 'Ex: Comprador', opts.cargo);
+    var fTelefone = createField('Telefone', true, 'text', '(11) 90000-0000', opts.telefone);
+    var fEmail = createField('Email', false, 'email', 'nome@empresa.com', opts.email);
+
+    // Guardamos as referências direto no elemento do bloco, pra ler
+    // os valores na hora do envio sem depender de posição no grid.
+    block._fields = { nome: fNome.input, cargo: fCargo.input, telefone: fTelefone.input, email: fEmail.input };
+
+    var grid = document.createElement('div');
+    grid.className = 'grid';
+    grid.appendChild(fNome.wrap);
+    grid.appendChild(fCargo.wrap);
+    grid.appendChild(fTelefone.wrap);
+    grid.appendChild(fEmail.wrap);
+
+    block.appendChild(head);
+    block.appendChild(grid);
+    return block;
+  }
+
+  function addContact(opts){
+    if(contactCount >= MAX) return;
+    var block = buildContactBlock(opts);
+    container.appendChild(block);
+    contactCount++;
+    updateCounter();
+  }
+
+  function collectContatos(){
+    var blocks = container.querySelectorAll('.contact-block');
+    var contatos = [];
+    blocks.forEach(function(block){
+      var f = block._fields;
+      contatos.push({
+        nome: f.nome.value.trim(),
+        cargo: f.cargo.value.trim(),
+        telefone: f.telefone.value.trim(),
+        email: f.email.value.trim()
+      });
+    });
+    return contatos;
+  }
+
+  function validarFormulario(contatos){
+    if(!parceiroNomeInput.value.trim()){
+      showError('Preencha o nome do parceiro.');
+      return false;
+    }
+    // Código do parceiro é opcional — sem checagem de preenchimento.
+
+    if(!clienteNomeInput.value.trim()){
+      showError('Preencha o nome do cliente.');
+      return false;
+    }
+    var cnpjDigits = clienteCodigoInput.value.replace(/\D/g, '');
+    if(cnpjDigits.length !== 14){
+      showError('CNPJ do cliente inválido — precisa ter 14 dígitos (ex: 00.000.000/0000-00).');
+      return false;
+    }
+    if(contatos.length < 1){
+      showError('Cadastre ao menos 1 contato.');
+      return false;
+    }
+    for(var i = 0; i < contatos.length; i++){
+      if(!contatos[i].nome || !contatos[i].telefone){
+        showError('O contato ' + (i + 1) + ' precisa de nome e telefone.');
+        return false;
+      }
+    }
+    return true;
+  }
+
+  function enviarCadastro(){
+    clearError();
+
+    var contatos = collectContatos();
+    if(!validarFormulario(contatos)) return;
+
+    var lgpd = document.getElementById('lgpd-check');
+    if(!lgpd.checked){
+      showError('É necessário confirmar a autorização de uso dos dados de contato antes de enviar.');
+      lgpd.focus();
+      return;
+    }
+
+    var payload = {
+      p_parceiro_nome: parceiroNomeInput.value.trim(),
+      p_parceiro_codigo: parceiroCodigoInput.value.trim(),
+      p_cliente_nome: clienteNomeInput.value.trim(),
+      p_cliente_codigo: clienteCodigoInput.value.trim(),
+      p_contatos: contatos
+    };
+
+    var submitBtn = document.getElementById('submit-btn');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Enviando...';
+
+    fetch(SUPABASE_URL + '/rest/v1/rpc/submit_cadastro', {
+      method: 'POST',
+      headers: {
+        'apikey': ANON_KEY,
+        'Authorization': 'Bearer ' + ANON_KEY,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    }).then(function(res){
+      if(res.ok){
+        window.location.href = 'obrigado.html';
+        return;
+      }
+      return res.text().then(function(text){
+        console.error('Erro ao enviar cadastro (submit_cadastro):', text);
+        showError('Não foi possível enviar o cadastro. Verifique os dados (nome, código, telefone) e tente novamente.');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Enviar cadastro';
+      });
+    }).catch(function(err){
+      console.error('Erro de rede ao enviar cadastro:', err);
+      showError('Erro de conexão. Verifique sua internet e tente novamente.');
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Enviar cadastro';
+    });
+  }
+
+  function init(){
+    container = document.getElementById('contacts-container');
+    addBtn = document.getElementById('add-btn');
+    counterEl = document.getElementById('contact-counter');
+    errorBanner = document.getElementById('error-banner');
+
+    var parceiroFields = document.getElementById('parceiro-fields');
+    var fParceiroNome = createField('Nome do parceiro', true, 'text', 'Nome completo');
+    var fParceiroCodigo = createField('Código do parceiro', false, 'text', 'Ex: PRC-0231 (opcional)');
+    parceiroNomeInput = fParceiroNome.input;
+    parceiroCodigoInput = fParceiroCodigo.input;
+    parceiroFields.appendChild(fParceiroNome.wrap);
+    parceiroFields.appendChild(fParceiroCodigo.wrap);
+
+    var clienteFields = document.getElementById('cliente-fields');
+    var fClienteNome = createField('Nome do cliente', true, 'text', 'Razão social ou nome fantasia');
+    var fClienteCodigo = createField('CNPJ do cliente', true, 'text', '00.000.000/0000-00');
+    clienteNomeInput = fClienteNome.input;
+    clienteCodigoInput = fClienteCodigo.input;
+    clienteFields.appendChild(fClienteNome.wrap);
+    clienteFields.appendChild(fClienteCodigo.wrap);
+
+    addBtn.onclick = function(){ addContact(); };
+
+    // Um contato obrigatório em branco por padrão — sem dado de exemplo,
+    // já que agora grava de verdade no Supabase.
+    addContact({ removable: false });
+
+    var submitBtn = document.getElementById('submit-btn');
+    submitBtn.onclick = enviarCadastro;
+  }
+
+  document.addEventListener('DOMContentLoaded', init);
+})();
+</script>
+
+</body>
+</html>
