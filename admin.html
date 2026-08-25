@@ -47,6 +47,22 @@
     color:var(--muted);
     font-weight:600;
   }
+  .header-right{
+    display:flex;
+    align-items:center;
+    gap:16px;
+  }
+  .btn-sair{
+    font-size:12px;
+    font-weight:600;
+    color:var(--primary);
+    text-decoration:none;
+    border:1px solid var(--primary);
+    padding:6px 12px;
+    border-radius:var(--radius);
+    display:none;
+  }
+  .btn-sair:hover{background:#FCEAED;}
   main{
     max-width:1000px;
     margin:0 auto;
@@ -226,7 +242,10 @@
 
 <header>
   <div class="logo">YAMÁ</div>
-  <div class="header-tag">Painel de Administração</div>
+  <div class="header-right">
+    <div class="header-tag">Painel de Administração</div>
+    <a class="btn-sair" href="index.html" id="btn-sair">Sair</a>
+  </div>
 </header>
 
 <main>
@@ -445,11 +464,13 @@
     senhaAtual = null;
     document.getElementById('login-screen').style.display = 'block';
     document.getElementById('panel-screen').style.display = 'none';
+    document.getElementById('btn-sair').style.display = 'none';
   }
 
   function mostrarPainel(){
     document.getElementById('login-screen').style.display = 'none';
     document.getElementById('panel-screen').style.display = 'block';
+    document.getElementById('btn-sair').style.display = 'inline-block';
     carregarCadastros();
   }
 
