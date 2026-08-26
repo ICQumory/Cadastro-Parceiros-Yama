@@ -484,9 +484,9 @@
     }
 
     var fNome = createField('Nome', true, 'text', 'Nome completo', opts.nome);
-    var fCargo = createField('Cargo', false, 'text', 'Ex: Comprador', opts.cargo);
+    var fCargo = createField('Cargo', true, 'text', 'Ex: Comprador', opts.cargo);
     var fTelefone = createField('Telefone', true, 'text', '(11) 90000-0000', opts.telefone);
-    var fEmail = createField('Email', false, 'email', 'nome@empresa.com', opts.email);
+    var fEmail = createField('Email', true, 'email', 'nome@empresa.com', opts.email);
 
     // Guardamos as referências direto no elemento do bloco, pra ler
     // os valores na hora do envio sem depender de posição no grid.
@@ -548,8 +548,8 @@
       return false;
     }
     for(var i = 0; i < contatos.length; i++){
-      if(!contatos[i].nome || !contatos[i].telefone){
-        showError('O contato ' + (i + 1) + ' precisa de nome e telefone.');
+      if(!contatos[i].nome || !contatos[i].cargo || !contatos[i].telefone || !contatos[i].email){
+        showError('O contato ' + (i + 1) + ' precisa de nome, cargo, telefone e email preenchidos.');
         return false;
       }
     }
